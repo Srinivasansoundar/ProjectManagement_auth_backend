@@ -9,7 +9,7 @@ from src.core.services.auth_service import AuthService
 from src.api.rest.dependencies.services import get_auth_service
 
 router=APIRouter(prefix="/auth",tags=["auth"])
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 @router.post(
     "/login",

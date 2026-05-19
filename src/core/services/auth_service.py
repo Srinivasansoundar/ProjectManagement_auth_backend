@@ -80,7 +80,8 @@ class AuthService:
                 "refresh_token":refresh_token,
                 "token_type":"bearer",
                 "user_info":{
-                    "id":str(user.id)
+                    "id":str(user.id),
+                    "role":user.role.value
                 }
             }
             return response

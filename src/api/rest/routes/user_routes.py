@@ -5,7 +5,8 @@ from src.schemas.user_schema import(
      CreateUserRequest,
      CreateUserResponse,
      UserResponse,
-     UserInfoResponse)
+     UserInfoResponse,
+     UpdateUserRequest)
 from src.api.rest.dependencies.services import get_user_service
 from src.api.rest.dependencies.auth import verify_admin
 from src.core.services.user_service import UserService
@@ -58,9 +59,9 @@ async def get_user_info(
 )
 async def update_user_info(
     user_id:UUID=Path(..., description="User ID"),
-    payload:CreateUserRequest=None,
+    payload:UpdateUserRequest=None,
     _:None=Depends(verify_admin),
     user_service:UserService=Depends(get_user_service)      
 ):
-    res=user_service.update_user_info(user_id,payload)
+    res=await user_service.update_user_info(user_id,payload)
     return res
