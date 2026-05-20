@@ -32,7 +32,9 @@ class UserService:
             return CreateUserResponse(
                 message="User created successfully",
                 user=UserResponse(
+
                     id=created.id,
+                    name=created.name,
                     email=created.email,
                     role=created.role
                 )
