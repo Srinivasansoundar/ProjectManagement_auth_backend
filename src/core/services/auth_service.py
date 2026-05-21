@@ -61,8 +61,8 @@ class AuthService:
     async def login(self,payload:LoginRequest):
         try:
             user=await self.user_repository.get_user_by_email(payload.email)
-            # if user is None:
-            #     raise ResourceNotFoundException("User not exist")
+            if user is None:
+                raise ResourceNotFoundException("Invalid email or password")
             
             verified=self.verify_password(payload.password,user.hashed_password if user else "dummy_hash")
             if user is None or not verified:
