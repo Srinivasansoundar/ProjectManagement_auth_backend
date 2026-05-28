@@ -10,3 +10,6 @@ wheels/
 .venv
 .env
 generate_hash.py
+
+Dockerfile
+docker-compose.yml

@@ -45,6 +45,8 @@ class UserService:
     async def get_all_users(self):
         try:
             users = await self.user_repository.get_all_users()
+            # Filter out admin users
+            users = [user for user in users if user.role != ModelUserRole.ADMIN]
             return users
         except Exception as e:
             logger.error(f"Unexpected error fetching users: {str(e)}")
@@ -77,3 +79,12 @@ class UserService:
         except Exception as e:
             logger.error(f"Unexpected error updating user info: {str(e)}")
             raise CustomException("Failed to update user info", status_code=500)
+    
+    async def delete_user(self,user_id:UUID):
+        try:
+            deleted=await self.user_repository.delete_user_by_id(user_id)
+            if not deleted:
+                raise ResourceNotFoundException("User not found")
+        except Exception as e:
+            logger.error(f"Unexpected error deleting user: {str(e)}")
+            raise CustomException("Failed to delete user", status_code=500)

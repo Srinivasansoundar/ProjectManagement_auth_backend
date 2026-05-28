@@ -47,4 +47,11 @@ class UserRepository:
             await self.db.refresh(user)
         return user
     
+    async def delete_user_by_id(self,user_id)->bool:
+        result=await self.db.execute(select(User).where(User.id==user_id))
+        user=result.scalar_one_or_none()
+        if user:
+            await self.db.delete(user)
+            return True
+        return False
     

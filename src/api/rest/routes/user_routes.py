@@ -65,3 +65,14 @@ async def update_user_info(
 ):
     res=await user_service.update_user_info(user_id,payload)
     return res
+
+@router.delete(
+    "/user/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+async def delete_user(
+    user_id:UUID=Path(..., description="User ID"),
+    _:None=Depends(verify_admin),
+    user_service:UserService=Depends(get_user_service)      
+):
+    await user_service.delete_user(user_id)
